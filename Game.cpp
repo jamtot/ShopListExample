@@ -1,7 +1,7 @@
 #include "Game.h"
 
 Game::Game(){}
-Game::~Game(){}
+Game::~Game(){delete player;}
 
 void Game::init(){
 	
@@ -22,7 +22,7 @@ void Game::playerSetup(){
 	player->addItem(Item("Tattered Shirt", 0));
 	player->addItem(Item("Rotting Potato", -5, 5));
 	cout << endl;
-	player->printPlayer();
+	player->printSelf();
 }
 
 void Game::shopSetup()
@@ -45,6 +45,6 @@ void Game::shopSetup()
 void Game::printShops(){
 	lshIter = lShops.begin();
 	for (;lshIter != lShops.end(); lshIter++){
-		(*lshIter).printShop();
+		(*lshIter).printSelf();
 	}
 }

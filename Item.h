@@ -16,6 +16,8 @@ public:
 	Item(string name, int value, int damage = 0, int armour = 0);
 	~Item();
 	void printItem();
+	//getters & setters
+	string getName(){return _name;}
 };
 
 #endif
