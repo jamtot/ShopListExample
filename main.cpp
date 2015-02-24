@@ -25,63 +25,14 @@
 	-Jonathan Morris
 */
 
-#include <list>
-#include "Player.h"
-#include "Shop.h"
-
-Player* playerSetup();
-void shopSetup(list<Shop> &shplst);
-void printShops(list<Shop> &shplst, list<Shop>::iterator &shplstiter);
+#include "Game.h"
 
 int main()
 {
-	cout << "*** Shop Explorer 0.1 ***" << endl << endl;
-	Player *player = playerSetup();
-
-	list<Shop> lShops;
-	list<Shop>::iterator lshIter;
-
-	shopSetup(lShops);
-	printShops(lShops, lshIter);
-	
-	
+	Game myGame;
+	myGame.init();
 	
 	return 0;
 }
 
-Player* playerSetup(){
-	string playersName;
-	cout << "Welcome young traveller, what is your name? ";
-	cin >> playersName;
 
-	Player * p = new Player(playersName, 250);
-	p->addItem(Item("Kitten", 50));
-	p->addItem(Item("Tattered Shirt", 0));
-	p->addItem(Item("Rotting Potato", -5, 5));
-	p->printPlayer();
-	return p;
-}
-
-void shopSetup(list<Shop> &shplst)
-{
-	shplst.push_back(Shop("Bill's Big Bad Bakery", 500));
-	shplst.back().addItem(Item("Bangin' Bread", 10));
-	shplst.back().addItem(Item("Badass Baguette", 6));
-	shplst.back().addItem(Item("Delicious Doughnut", 2));
-	shplst.back().addItem(Item("Curvaceous Croissant", 4));
-	//etc.
-
-	shplst.push_back(Shop("Friendly Fred's Fruitorium", 350));
-	shplst.back().addItem(Item("Aromatic Apple", 2));
-	shplst.back().addItem(Item("Bountiful Banana", 2));
-	shplst.back().addItem(Item("Oversized Orange", 2));
-	shplst.back().addItem(Item("Wholesome Watermelon", 3));
-	//etc.
-}
-
-void printShops(list<Shop> &shplst, list<Shop>::iterator &shplstiter){
-	shplstiter = shplst.begin();
-	for (;shplstiter != shplst.end(); shplstiter++){
-		(*shplstiter).printShop();
-	}
-}
