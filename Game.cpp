@@ -3,13 +3,20 @@
 Game::Game(){}
 Game::~Game(){delete player;}
 
-void Game::init(){
+void Game::init(){//set up initial values
 	
 	cout << "*** Shop Explorer 0.1 ***" << endl << endl;
 	playerSetup();
 	shopSetup();
 	printShops();
 
+}
+
+void Game::loop(){//the loop for the game
+	//select a shop (akin to drugwars country)
+	//roll to see if a random event happens (player finds a bigger backpack, 			finds a stash, drops something when confronted by someone, is attacked, 		etc.)
+	//list shops goods and prices, allowing player to buy or sell
+	//
 }
 
 void Game::playerSetup(){
@@ -21,7 +28,10 @@ void Game::playerSetup(){
 	player->addItem(Item("Kitten", 50));
 	player->addItem(Item("Tattered Shirt", 0));
 	player->addItem(Item("Rotting Potato", -5, 5));
+	player->addItem(Item("Pudding", 1));
 	cout << endl;
+	player->printSelf();
+	player->removeItem("Pudding");
 	player->printSelf();
 }
 

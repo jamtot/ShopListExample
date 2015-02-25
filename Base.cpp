@@ -28,7 +28,7 @@ void Base::printItems(){
 	}
 }
 
-//does the player have the item?
+//does the base have the item?
 bool Base::haveItem(Item tItem){
 	_lIter = _lItems.begin();
 	for (;_lIter != _lItems.end(); _lIter++){
@@ -37,4 +37,29 @@ bool Base::haveItem(Item tItem){
 		}
 	}
 	return false;
+}
+
+bool Base::haveItem(string itemName){
+	_lIter = _lItems.begin();
+	for (;_lIter != _lItems.end(); _lIter++){
+		if ( (*_lIter).getName() == itemName){
+			return true;
+		}
+	}
+	return false;
+}
+
+/*void Base::removeItem(Item item){
+	if (haveItem(item)){
+		//_lItems.remove(item);
+	}
+}*/
+
+void Base::removeItem(string itemName){
+	_lIter = _lItems.begin();
+	for (;_lIter != _lItems.end(); _lIter++){
+		if (itemName == ((*_lIter).getName()) ){
+			_lIter = _lItems.erase(_lIter);
+		}
+	}
 }

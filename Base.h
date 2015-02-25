@@ -14,6 +14,9 @@ public:
 	void addItem(Item item);
 	void printItems();
 	bool haveItem(Item tItem);
+	bool haveItem(string itemName);
+	//void removeItem(Item item);
+	void removeItem(string itemName);
 
 	//getters and setters
 	int getMoney(){return _money;}
