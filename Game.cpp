@@ -24,37 +24,137 @@ void Game::playerSetup(){
 	cout << "Welcome young traveller, what is your name? ";
 	cin >> playersName;
 
-	player = new Player(playersName, 250);
-	player->addItem(Item("Kitten", 50));
-	player->addItem(Item("Tattered Shirt", 0));
-	player->addItem(Item("Rotting Potato", -5, 5));
-	player->addItem(Item("Pudding", 1));
-	cout << endl;
-	player->printSelf();
-	player->removeItem("Pudding");
+	player = new Player(playersName, 5000);
 	player->printSelf();
 }
 
 void Game::shopSetup()
 {
-	lShops.push_back(Shop("Bill's Big Bad Bakery", 500));
-	lShops.back().addItem(Item("Bangin' Bread", 10));
-	lShops.back().addItem(Item("Badass Baguette", 6));
-	lShops.back().addItem(Item("Delicious Doughnut", 2));
-	lShops.back().addItem(Item("Curvaceous Croissant", 4));
-	//etc.
-
-	lShops.push_back(Shop("Friendly Fred's Fruitorium", 350));
-	lShops.back().addItem(Item("Aromatic Apple", 2));
-	lShops.back().addItem(Item("Bountiful Banana", 2));
-	lShops.back().addItem(Item("Oversized Orange", 2));
-	lShops.back().addItem(Item("Wholesome Watermelon", 3));
-	//etc.
+	generateShop("Trafalgar");
 }
 
 void Game::printShops(){
 	lshIter = lShops.begin();
 	for (;lshIter != lShops.end(); lshIter++){
-		(*lshIter).printSelf();
+		(*lshIter)->printSelf();
 	}
+}
+
+void Game::travelTo(string placeName){
+	lShops.push_back( generateShop(placeName) );
+	fillShop(lShops.back());
+}
+
+
+Shop* Game::generateShop(string shopName){
+	return new Shop(shopName,1000000);
+}
+
+void Game::fillShop(Shop *shop){
+	srand(time(NULL));
+	int event = 0;
+	if (isRandomEvent()){
+		event = randomEvent();
+	}
+	
+
+}
+
+bool Game::isRandomEvent(){
+	srand(time(NULL));
+	int random = (rand() % 100) + 1;
+	//2% chance of random event
+	if (random >6 && random < 9){
+		randomEvent();
+		return true;
+	} else { return false; }
+}
+
+int Game::randomEvent(){
+	int event = (rand() % 10) + 1;
+	switch (event){
+		case 1:
+			//cops
+			copAttack();
+			break;
+		case 2:
+			//bumper crop, market flood
+			bumperCrop();
+			break;
+		case 3:
+			//famine, sky high prices
+			famineCrop();
+			break;
+		case 4:
+			//find a bigger bag
+			findBag();
+			break;
+		case 5:
+			//buy a gun
+			buyGun();
+			break;
+		case 6:
+			//find a stash
+			findStash();
+			break;
+		case 7:
+			//find money
+			findMoney();
+			break;
+		case 8:
+			//customs
+			customs();
+			break;
+		case 9:
+			//find gun
+			findGun();
+			break;
+		case 10:
+			//loanshark coming to break legs
+			loanShark();
+			break;
+		default:
+			//nothing
+			findMoney();
+	}
+	return event;
+}
+
+
+
+void Game::copAttack(){
+
+}
+
+void Game::bumperCrop(){
+
+}
+void Game::famineCrop(){
+
+}
+void Game::findBag(){
+	player->doubleCapacity();	
+	cout << "You found a new inventory bag! You can now store " << player->getMaxItems() << " items!" << endl;	
+	
+}
+void Game::buyGun(){
+
+}
+void Game::findStash(){
+
+}
+void Game::findMoney(){
+	int freeMoney = (rand()%20000) + 5000;
+	cout << "A rich person threw money at you! You got an extra " << freeMoney << endl;
+	player->addMoney(freeMoney);
+	
+}
+void Game::customs(){
+
+}
+void Game::findGun(){
+
+}
+void Game::loanShark(){
+
 }
