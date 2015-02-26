@@ -31,6 +31,7 @@ int main()
 {
 	Game myGame;
 	myGame.init();
+	myGame.loop();
 	
 	return 0;
 }

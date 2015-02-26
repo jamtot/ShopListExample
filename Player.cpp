@@ -48,6 +48,10 @@ void Player::doubleCapacity(){
 void Player::addGun(){
 	_guns+=1;
 }
+	
+void Player::tossGuns(){
+	_guns = 0;
+}
 
 void Player::doubleDebt(){
 	_loan*=2;
@@ -73,5 +77,32 @@ bool Player::dropItem(string itemName){
 		return true;
 	} else { //no item to drop
 		return false; 
+	}
+}
+
+int Player::getFinal(){
+	if (_money < _loan)
+		return 0;
+	else
+		return _money-=_loan;
+}
+
+void Player::deposit(int money){
+	if (money <= _money){//can deposit
+		_bank += money;
+		_money -= money;	
+		cout << "You now have "<<_money<<" money, "<<_bank<<" in the bank, and owe " << _loan << "." << endl;
+	} else { 
+		cout << "You don't got the dosh, bro. Can only deposit a max of " << _money << "." << endl;
+	}
+}
+
+void Player::withdraw(int withdrawal){
+	if (withdrawal <= _bank){//can withdraw
+		_bank -= withdrawal;
+		_money += withdrawal;
+		cout << "You now have "<<_money<<" money, "<<_bank<<" in the bank, and owe " << _loan << "." << endl;
+	} else { 
+		cout << "You don't got the cash in the bank to make this withdrawal. Can only withdraw a max of " << _bank << "." << endl;
 	}
 }

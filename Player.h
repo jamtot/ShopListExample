@@ -7,6 +7,7 @@ class Player:public Base{
 private:
 	int _maxItems;
 	int _loan;
+	int _bank;
 	int _guns;
 	bool _isAlive;
 public:
@@ -18,6 +19,7 @@ public:
 	bool getLoan();
 	void doubleCapacity();
 	void addGun();
+	void tossGuns();
 	void doubleDebt();
 	void wipeDebt();
 	void halfDebt();
@@ -34,8 +36,10 @@ public:
 	void addDebt(int amount){ _loan+=amount; }
 	void setDebt(int amount){ _loan = amount; }
 	int getDebt(){return _loan;}
+	int getFinal();
 	
-	
+	void deposit(int money);
+	void withdraw(int withdrawal);
 	
 
 };

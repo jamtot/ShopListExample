@@ -17,15 +17,18 @@ public:
 	bool haveItem(string itemName);
 	void removeItem(string itemName);
 
-	//getters and setters
-	int getMoney(){return _money;}
-	void setMoney(int amount){_money = amount;}
-	void addMoney(int amount){_money+=amount;)
+	
 protected:
 	string _name;
 	list<Item> _lItems;
 	list<Item>::iterator _lIter;
 	int _money;
+	
+public:
+	//getters and setters
+	int getMoney(){return _money;}
+	void setMoney(int amount){_money = amount;}
+	void addMoney(int amount){_money+=amount;}
 };
 
 #endif

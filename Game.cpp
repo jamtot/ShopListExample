@@ -18,17 +18,17 @@ void Game::loop(){//the loop for the game
 	//roll to see if a random event happens (player finds a bigger backpack, 			finds a stash, drops something when confronted by someone, is attacked, 		etc.)
 	//list shops goods and prices, allowing player to buy or sell
 	//
-	int i = 31;
 	while (daysLeft > 0 && player->isAlive()){
 		cout << "You have " << daysLeft << " days left." << endl;		
-		int event = 0;	
+		//int event = 0;	
 		if (isRandomEvent()){
-			event = randomEvent();
-		}
+			int event = randomEvent();
+		} 
 
+		player->update();
 		daysLeft--;
 	}
-	cout << "Out of time. You made " << player->getMoney() << ". " << endl;
+	cout << "Out of time. You made " << player->getFinal() << ". " << endl;
 	
 }
 
@@ -43,7 +43,7 @@ void Game::playerSetup(){
 
 void Game::shopSetup()
 {
-	generateShop("Trafalgar");
+	fillShop(generateShop("Trafalgar"));
 }
 
 void Game::printShops(){
@@ -54,13 +54,13 @@ void Game::printShops(){
 }
 
 void Game::travelTo(string placeName){
-	lShops.push_back( generateShop(placeName) );
-	fillShop(lShops.back());
+	//lShops.push_back( );
+	fillShop( generateShop(placeName));
 }
 
 
 Shop* Game::generateShop(string shopName){
-	return new Shop(shopName,1000000);
+	return new Shop(shopName,10000000);
 }
 
 void Game::fillShop(Shop *shop){
@@ -73,7 +73,7 @@ bool Game::isRandomEvent(){
 	int random = (rand() % 100) + 1;
 	//2% chance of random event
 	if (random >6 && random < 9){
-		randomEvent();
+		//randomEvent();
 		return true;
 	} else { return false; }
 }
@@ -129,20 +129,30 @@ int Game::randomEvent(){
 }
 
 void Game::copAttack(){
-
+	char choice;	
+	cout << "A cop stops you, you look a little sweaty. \nA) Stay and chat, or \nB) flee. (A/B):" ;
+	cin >> choice;
+	if (choice == 'A' || choice == 'a'){
+		cout << "You have a nice chat. You talk about sports or tv... or something. Not all cops assume the worst you know. He lets you on your way." << endl;
+	} else {
+		cout << "Have you actually ever watched worlds wildest police videos? The cops have helicopters. You are caught, obviously." << endl;
+		player->setAlive(false);
+	} 
 }
 
 void Game::bumperCrop(){
-
+	cout << "A bumper crop of X floods the market. What is X? YOU DECIDE! (with implementation, of course.)" << endl;
 }
+
 void Game::famineCrop(){
-
+	cout << "Demand soars for <insert purchasable here>! Implement this now!" << endl;
 }
+
 void Game::findBag(){
 	player->doubleCapacity();	
 	cout << "You found a new inventory bag! You can now store " << player->getMaxItems() << " items!" << endl;	
-	
 }
+
 void Game::buyGun(){
 	char buy;	
 	cout << "You meet a 'gun broker'. Would you like to buy a gun for 2000?(y/n)";
@@ -159,26 +169,33 @@ void Game::buyGun(){
 		cout << "You tell him where to stick his guns." << endl;
 	}
 }
-void Game::findStash(){
 
+void Game::findStash(){
+	cout << "You found a stash...implement your inventory please." << endl;
 }
+
 void Game::findMoney(){
 	int freeMoney = (rand()%20000) + 5000;
 	cout << "A rich person threw money at you! You got an extra " << freeMoney << endl;
 	player->addMoney(freeMoney);
 	
 }
-void Game::customs(){
 
+void Game::customs(){
+	cout << "Customs, oh no! You toss your guns." << endl;
+	player->tossGuns();
 }
+
 void Game::findGun(){
 	player->addGun(); 	
-	cout << "A panicked man running by shoves a gun into your hands. Free gun! You've now got " << player->getGuns() << " guns now." << endl;
+	cout << "A panicked man running by shoves a gun into your hands. Free gun! You've got " << player->getGuns() << " gun(s) now." << endl;
 	
 }
+
+//TODO change this to use guns to help kill chance
 void Game::loanShark(){//what happens when you encounter the loan shark 
 	char choice;	
-	cout << "The loan shark wants his money. You have " << player->getMoney() << ", you owe " << player->getLoan() << ". Do you\n A) pay up (up to as much as you can pay), \nB) flee (80%\ chance succesful, 20%\fail, doubles debt), or \nC) attack (5%\ chance to kill and wipe debt, 50%\ chance to get killed yourself, 45%\ chance to wound and magically half the debt)? (a/b/c)";
+	cout << "The loan shark wants his money. You have " << player->getMoney() << ", you owe " << player->getDebt() << ". Do you\nA) pay up (up to as much as you can pay), \nB) flee (80\% chance succesful, 20\%fail, doubles debt), or \nC) attack (5\% chance to kill and wipe debt, 50\% chance to get killed yourself, 45\% chance to wound and magically half the debt)? (A/B/C): ";
 	cin >> choice;
 
 	int chances = getNum1to100();
@@ -188,7 +205,7 @@ void Game::loanShark(){//what happens when you encounter the loan shark
 			cout << "You successfully flee!" << endl;
 		} else {
 			player->doubleDebt();		
-			cout << "You trip trying to skip out on the shark.\nHe doesn't like that.\nYou owe double now to avoid a kneecapping. You now owe " << player->getLoan() << ". Happy?" << endl; 
+			cout << "You trip trying to skip out on the shark.\nHe doesn't like that.\nYou owe double now to avoid a kneecapping. You now owe " << player->getDebt() << ". Happy?" << endl; 
 		}
 
 	} else if (choice == 'c' || choice == 'C') {
@@ -215,9 +232,10 @@ void Game::loanShark(){//what happens when you encounter the loan shark
 			
 		}
 	}
-	cout << "You now owe " << player->getLoan() << "." << endl;
+	if (player->isAlive())
+		cout << "You now owe " << player->getDebt() << "." << endl;
 }
 
-int getNum1to100(){
+int Game::getNum1to100(){
 	return ((rand()%100) + 1);
 }
