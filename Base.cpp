@@ -49,11 +49,6 @@ bool Base::haveItem(string itemName){
 	return false;
 }
 
-/*void Base::removeItem(Item item){
-	if (haveItem(item)){
-		//_lItems.remove(item);
-	}
-}*/
 
 void Base::removeItem(string itemName){
 	_lIter = _lItems.begin();

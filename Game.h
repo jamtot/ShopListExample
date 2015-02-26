@@ -18,6 +18,7 @@ private:
 	Player *player;
 	list<Shop*> lShops;
 	list<Shop*>::iterator lshIter;
+	int daysLeft;
 
 	void playerSetup();
 	void shopSetup();
@@ -41,6 +42,8 @@ private:
 	void customs();
 	void findGun();
 	void loanShark();
+
+	int getNum1to100();
 };
 
 #endif

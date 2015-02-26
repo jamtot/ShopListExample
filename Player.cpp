@@ -3,6 +3,7 @@
 Player::Player(string name, int money) : Base(name,money) {
 	_loan = 5000;
 	_maxItems = 40;
+	_isAlive = true;
 }
 
 Player::~Player(){}
@@ -40,12 +41,24 @@ bool Player::getLoan(){
 	}
 }
 
-void Player::addMoney(int money){
-	_money += money;
-}
-
 void Player::doubleCapacity(){
 	_maxItems*=2;
+}
+
+void Player::addGun(){
+	_guns+=1;
+}
+
+void Player::doubleDebt(){
+	_loan*=2;
+}
+
+void Player::wipeDebt(){
+	_loan = 0;
+}
+
+void Player::halfDebt(){
+	_loan/=2;
 }
 
 bool Player::dropItem(Item item){
