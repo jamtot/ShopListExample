@@ -8,9 +8,7 @@ void Game::init(){//set up initial values
 	daysLeft = 30;
 	cout << "*** Shop Explorer 0.1 ***" << endl << endl;
 	playerSetup();
-	shopSetup();
-	printShops();
-
+	//printShops();
 }
 
 void Game::loop(){//the loop for the game
@@ -21,10 +19,9 @@ void Game::loop(){//the loop for the game
 	while (daysLeft > 0 && player->isAlive()){
 		cout << "You have " << daysLeft << " days left." << endl;		
 		string placeName;
-		cout << "Where would you like to go? " << endl;
+		cout << "Where would you like to go? ";
 		cin >> placeName;	
-		//getline(cin,placeName);
-		
+		multiplier = 1;
 		if (isRandomEvent()){
 			randomEvent();
 		} 
@@ -38,7 +35,6 @@ void Game::loop(){//the loop for the game
 		daysLeft--;
 	}
 	cout << "Out of time. You made " << player->getFinal() << ". " << endl;
-	
 }
 
 void Game::playerSetup(){
@@ -50,10 +46,6 @@ void Game::playerSetup(){
 	player->printSelf();
 }
 
-void Game::shopSetup()
-{
-}
-
 void Game::printShops(){
 	lshIter = lShops.begin();
 	for (;lshIter != lShops.end(); lshIter++){
@@ -62,10 +54,11 @@ void Game::printShops(){
 }
 
 void Game::travelTo(string placeName){
-	//lShops.push_back( );
 	lShops.push_back( fillShop( generateShop( placeName ) ) );
+	//get the last shop (end returns 1 after the end)
 	currentShop = (--lShops.end());
-	cout << "You arrive at " << placeName << "." << endl;
+	cout << "You arrive at " << placeName << "." << endl << "Available goods are:" << endl;
+	(*currentShop)->printItems();
 }
 
 
@@ -74,7 +67,29 @@ Shop* Game::generateShop(string shopName){
 }
 
 Shop* Game::fillShop(Shop *shop){
-	//shop->
+	if (famine){	
+		shop->addItem(Item("Gold nugget", ( (rand() %250 ) + 250) * multiplier));
+		shop->addItem(Item("Rare apple", ( (rand() %300 ) + 10) * multiplier));
+		shop->addItem(Item("Opium", ( (rand() % 15000 ) + 10000) * multiplier));
+		shop->addItem(Item("Medicine", ( (rand() %7500 ) + 2500) * multiplier));
+		shop->addItem(Item("Blue rocks", ( (rand() %200 ) + 50) * multiplier));
+		shop->addItem(Item("Slave", ( (rand() %75000 ) + 25000) * multiplier));
+		shop->addItem(Item("Cart", ( (rand() %2500 ) + 2500) * multiplier));
+		shop->addItem(Item("Meat", ( (rand() %290 ) + 10) * multiplier));
+		shop->addItem(Item("Potatoes", ( (rand() %45 ) + 5) * multiplier));
+		shop->addItem(Item("Donkey", ( (rand() %12500 ) + 2500) * multiplier));
+	} else {
+		shop->addItem(Item("Gold nugget", ( (rand() %250 ) + 250) / multiplier));
+		shop->addItem(Item("Rare apple", ( (rand() %300 ) + 10) / multiplier));
+		shop->addItem(Item("Opium", ( (rand() % 15000 ) + 10000) / multiplier));
+		shop->addItem(Item("Medicine", ( (rand() %7500 ) + 2500) / multiplier));
+		shop->addItem(Item("Blue rocks", ( (rand() %200 ) + 50) / multiplier));
+		shop->addItem(Item("Slave", ( (rand() %75000 ) + 25000) / multiplier));
+		shop->addItem(Item("Cart", ( (rand() %2500 ) + 2500) / multiplier));
+		shop->addItem(Item("Meat", ( (rand() %290 ) + 10) / multiplier));
+		shop->addItem(Item("Potatoes", ( (rand() %45 ) + 5) / multiplier));
+		shop->addItem(Item("Donkey", ( (rand() %12500 ) + 2500) / multiplier));	
+	}
 	return shop;
 
 }
@@ -98,10 +113,14 @@ void Game::randomEvent(){
 		case 2:
 			//bumper crop, market flood
 			bumperCrop();
+			bumper = true;
+			famine = false;
 			break;
 		case 3:
 			//famine, sky high prices
 			famineCrop();
+			famine = true;	
+			bumper = false;
 			break;
 		case 4:
 			//find a bigger bag
@@ -135,7 +154,13 @@ void Game::randomEvent(){
 			//nothing
 			findMoney();
 	}
-	//return event;
+	if (event == 2 || event == 3){
+		multiplier = (rand()%9)+2;
+	} else {
+		bumper = false;
+		famine = false;
+		multiplier = 1;
+	}
 }
 
 void Game::copAttack(){

@@ -14,6 +14,8 @@ public:
 	
 	bool sellItem(Player *p, string itemName);
 	bool buyItem(Player *p);
+
+	
 };
 
 #endif

@@ -23,7 +23,9 @@ void Base::addItem(Item item){
 //print the items the base has
 void Base::printItems(){
 	_lIter = _lItems.begin();
-	for (;_lIter != _lItems.end(); _lIter++){
+	int count = 1;
+	for (;_lIter != _lItems.end(); _lIter++, count++){
+		cout << "\t" << count << ". ";		
 		(*_lIter).printItem();
 	}
 }

@@ -20,9 +20,11 @@ private:
 	list<Shop*>::iterator lshIter;
 	list<Shop*>::iterator currentShop;
 	int daysLeft;
+	int multiplier;
+
+	bool famine, bumper;
 
 	void playerSetup();
-	void shopSetup();
 	void printShops();
 
 	void travelTo(string placeName);
