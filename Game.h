@@ -18,6 +18,7 @@ private:
 	Player *player;
 	list<Shop*> lShops;
 	list<Shop*>::iterator lshIter;
+	list<Shop*>::iterator currentShop;
 	int daysLeft;
 
 	void playerSetup();
@@ -26,9 +27,9 @@ private:
 
 	void travelTo(string placeName);
 	Shop* generateShop(string shopName);
-	void fillShop(Shop* shop);
+	Shop* fillShop(Shop* shop);
 	bool isRandomEvent();
-	int randomEvent();
+	void randomEvent();
 
 
 	//random events

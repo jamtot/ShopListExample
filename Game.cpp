@@ -20,10 +20,19 @@ void Game::loop(){//the loop for the game
 	//
 	while (daysLeft > 0 && player->isAlive()){
 		cout << "You have " << daysLeft << " days left." << endl;		
-		//int event = 0;	
+		string placeName;
+		cout << "Where would you like to go? " << endl;
+		cin >> placeName;	
+		//getline(cin,placeName);
+		
 		if (isRandomEvent()){
-			int event = randomEvent();
+			randomEvent();
 		} 
+		if (player->isAlive()){
+			travelTo(placeName);
+		} else {
+			cout << "You don't arrive at " << placeName << "." << endl;
+		}
 
 		player->update();
 		daysLeft--;
@@ -43,7 +52,6 @@ void Game::playerSetup(){
 
 void Game::shopSetup()
 {
-	fillShop(generateShop("Trafalgar"));
 }
 
 void Game::printShops(){
@@ -55,7 +63,9 @@ void Game::printShops(){
 
 void Game::travelTo(string placeName){
 	//lShops.push_back( );
-	fillShop( generateShop(placeName));
+	lShops.push_back( fillShop( generateShop( placeName ) ) );
+	currentShop = (--lShops.end());
+	cout << "You arrive at " << placeName << "." << endl;
 }
 
 
@@ -63,9 +73,9 @@ Shop* Game::generateShop(string shopName){
 	return new Shop(shopName,10000000);
 }
 
-void Game::fillShop(Shop *shop){
-
-	
+Shop* Game::fillShop(Shop *shop){
+	//shop->
+	return shop;
 
 }
 
@@ -78,7 +88,7 @@ bool Game::isRandomEvent(){
 	} else { return false; }
 }
 
-int Game::randomEvent(){
+void Game::randomEvent(){
 	int event = (rand() % 10) + 1;
 	switch (event){
 		case 1:
@@ -125,7 +135,7 @@ int Game::randomEvent(){
 			//nothing
 			findMoney();
 	}
-	return event;
+	//return event;
 }
 
 void Game::copAttack(){
